@@ -1,28 +1,53 @@
-//***********************************************************//
-// [ Source Code ]
-//
-// Institution : Institut Teknologi Bandung
-// Name : Yoga Putera
-// File Name : FileExternal.c
-// Dependency : stdio.h, string.h, lib.h, stdlib.h
-//
-// Description:
-// memuat data jadwal praktikum dan jadwal asisten dari file excel
-//
-//
-// Status:
-// 1. Yoga Putera - 13217080 : Create the file
-// 2. Michaella Yosephine - 18317004 : debug
-// 3. Rafita Erli - 18317005 : debug
-// 4. Lulu Firdaus - 18317001 : debug
-//***********************************************************//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lib.h"
 
-void SaveFileJadwal (char namafile[],praktikum lab1[13][6],praktikum lab2[13][6],praktikum lab3[13][6],praktikum labLSS[13][6])
+typedef struct{
+    char kode[7];
+    char rombongan[3];
+    char nama [3];
+} praktikum;
+
+int main()
+{
+    praktikum lab1[12][5],lab2[12][5],lab3[12][5],labLSS[12][5];
+    char namafile1[100],namafile2[100];
+    int i,j;
+    for (i=0;i<12;i++)
+    {
+        for(j=0;j<5;j++)
+        {
+            strcpy(lab1[i][j].kode," ");
+            strcpy(lab1[i][j].rombongan," ");
+            strcpy(lab1[i][j].nama," ");
+            strcpy(lab2[i][j].kode," ");
+            strcpy(lab2[i][j].rombongan," ");
+            strcpy(lab2[i][j].nama," ");
+            strcpy(lab3[i][j].kode," ");
+            strcpy(lab3[i][j].rombongan," ");
+            strcpy(lab3[i][j].nama," ");
+            strcpy(labLSS[i][j].kode," ");
+            strcpy(labLSS[i][j].rombongan," ");
+            strcpy(labLSS[i][j].nama," ");
+        }
+    }
+    gets(namafile1);
+    scanf("%c",&lab1[0][0].nama[0]);
+    scanf("\n%c",&lab1[0][0].nama[1]);
+    scanf("\n%c",&lab2[1][3].nama[0]);
+    scanf("\n%c",&lab2[1][3].nama[1]);
+    SaveFileAsisten(namafile1,lab1,lab2,lab3,labLSS);
+    LoadFileJadwal(namafile1,&lab1,&lab2,&lab3,&labLSS);
+    printf("%c,%c\n",lab1[0][0].nama[0],lab1[0][0].nama[1]);
+    printf("%c,%c\n",lab2[1][3].nama[0],lab2[1][3].nama[1]);
+    /*printf("%s-%s\n",lab2[0][0].kode,lab2[0][0].rombongan);
+    printf("%s-%s\n",lab3[0][0].kode,lab3[0][0].rombongan);
+    printf("%s-%s\n",labLSS[11][4].kode,labLSS[11][4].rombongan);
+    printf("%s-%s\n",lab2[3][3].kode,lab2[3][3].rombongan);*/
+    return(0);
+}
+
+void SaveFileJadwal (char namafile[],praktikum lab1[12][5],praktikum lab2[12][5],praktikum lab3[12][5],praktikum labLSS[12][5])
 
 //sebuah fungsi untuk menyimpan element array ke sebuah file eksternal dengan file ekstension .csv
 {
@@ -58,7 +83,7 @@ void SaveFileJadwal (char namafile[],praktikum lab1[13][6],praktikum lab2[13][6]
     fclose(fp); //menutup file eksternal
 }
 
-void SaveFileAsisten (char namafile[],praktikum lab1[13][6],praktikum lab2[13][6],praktikum lab3[13][6],praktikum labLSS[13][6])
+void SaveFileAsisten (char namafile[],praktikum lab1[12][5],praktikum lab2[12][5],praktikum lab3[12][5],praktikum labLSS[12][5])
 //sebuah fungsi untuk memasukkan element array ke file eksternal .csv
 {
     int mgg,hr; //variabel untuk iterasi hari dan minggu
@@ -92,7 +117,7 @@ void SaveFileAsisten (char namafile[],praktikum lab1[13][6],praktikum lab2[13][6
     fclose(fp); //menutup file eksternal
 }
 
-void LoadFileJadwal (char namafile[],praktikum lab1[13][6],praktikum lab2[13][6],praktikum lab3[13][6],praktikum labLSS[13][6])
+void LoadFileJadwal (char namafile[],praktikum lab1[12][5],praktikum lab2[12][5],praktikum lab3[12][5],praktikum labLSS[12][5])
 // menerima masukkan nama file lalu dimasukkan ke array of praktikum
 {
     FILE *fp;
@@ -114,7 +139,7 @@ void LoadFileJadwal (char namafile[],praktikum lab1[13][6],praktikum lab2[13][6]
     fclose(fp);
 
 }
-void LoadFileAsisten (char namafile[],praktikum lab1[13][6],praktikum lab2[13][6],praktikum lab3[13][6],praktikum labLSS[13][6])
+void LoadFileAsisten (char namafile[],praktikum lab1[12][5],praktikum lab2[12][5],praktikum lab3[12][5],praktikum labLSS[12][5])
 //menerima masukkan nama file lalu membaca file eksternal dan dimasukkan ke array of praktikum
 {
     FILE *fp;
